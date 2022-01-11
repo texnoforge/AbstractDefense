@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/tileset_blob_mask.png-d5991bbd56d51011b84f9612c1a38420.stex"
+path="res://.import/tileset_blob_mask.png-60b7eb89a79077dca4f9de10e4c05c39.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://test/tileset/tileset_blob_mask.png"
-dest_files=[ "res://.import/tileset_blob_mask.png-d5991bbd56d51011b84f9612c1a38420.stex" ]
+source_file="res://tileset/tileset_blob_mask.png"
+dest_files=[ "res://.import/tileset_blob_mask.png-60b7eb89a79077dca4f9de10e4c05c39.stex" ]
 
 [params]
 
