@@ -1,6 +1,11 @@
 extends Node2D
 
+const Turret = preload("res://buildings/turret/Turret.tscn")
+const CoreDrill = preload("res://buildings/core_drill/CoreDrill.tscn")
+
 var MAP_SIZE = Vector2(256, 256)
+var MAP_CENTER = MAP_SIZE / 2
+var CLEAR_BASE_RADIUS = 10
 
 var CAMERA_DELTA = 2000
 var ZOOM_STEP = 1.25
@@ -17,12 +22,13 @@ func _ready():
 	tile_map = $RockMap
 	camera = $TopCamera
 	
-	gen_map()
-	
 	camera.position = MAP_SIZE / 2 * tile_map.cell_size
 	camera.limit_right = MAP_SIZE.x * tile_map.cell_size.x
 	camera.limit_bottom = MAP_SIZE.y * tile_map.cell_size.y
-	
+
+	gen_map()
+	spawn_base()
+
 
 func _input(event):
 	if event is InputEventMouseButton:
@@ -67,7 +73,7 @@ func _process(delta):
 		print("camera at: %s" % camera.position)
 
 	# pass world coords transform to terrain shader
-	#tile_map.set_shader_tf(get_global_transform())
+	tile_map.material.set_shader_param('global_transform', get_global_transform())
 
 
 func gen_map():
@@ -82,6 +88,10 @@ func gen_map():
 	
 	for i in range(MAP_SIZE.x):
 		for j in range(MAP_SIZE.y):
+			var d_center = (Vector2(i, j) - MAP_CENTER).length()
+			if d_center < CLEAR_BASE_RADIUS:
+				# no terrain
+				continue
 			var r = noise.get_noise_2d(i, j)
 			if r > 0.2:
 				tile_map.set_cell(i, j, 0);
@@ -95,3 +105,21 @@ func gen_map():
 	print("map procgen in %f s" % ((t_gen - t_start) * 0.000001))
 	print("map autotile in %f s" % ((t_at - t_gen) * 0.000001))
 	print("map generated in %f s" % ((t_at - t_start) * 0.000001))
+
+
+func spawn_base():
+	var turret_spread = 250
+	var center = tile_map.map_to_world(MAP_SIZE / 2)
+	for i in range(-1, 2):
+		for j in range(-1, 2):
+			if i == 0 and j == 0:
+				# core drill in the middle
+				var cd = CoreDrill.instance()
+				cd.position = center + Vector2(i, j)
+				add_child(cd)
+				continue
+
+			# some turrets around
+			var t = Turret.instance()
+			t.position = center + Vector2(i * turret_spread, j * turret_spread)
+			add_child(t)
