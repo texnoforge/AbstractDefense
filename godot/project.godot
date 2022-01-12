@@ -8,10 +8,20 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "Node",
+"class": "Spawner",
+"language": "NativeScript",
+"path": "res://enemies/spawner/Spawner.gdns"
+} ]
+_global_script_class_icons={
+"Spawner": ""
+}
+
 [application]
 
 config/name="AbstractDefense"
-run/main_scene="res://random_world/RandomWorld.tscn"
+run/main_scene="res://test/TestScene.tscn"
 config/icon="res://icon.png"
 config/windows_native_icon="res://icon.ico"
 

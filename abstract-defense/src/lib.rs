@@ -1,10 +1,12 @@
 use gdnative::prelude::*;
 
 mod test_scene;
+mod spawner;
 
 // Function that registers all exposed classes to Godot
 fn init(handle: InitHandle) {
     handle.add_class::<test_scene::TestScene>();
+    handle.add_class::<spawner::Spawner>();
 }
 
 // Macro that creates the entry-points of the dynamic library.
