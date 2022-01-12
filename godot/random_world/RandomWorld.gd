@@ -67,7 +67,7 @@ func _process(delta):
 		print("camera at: %s" % camera.position)
 
 	# pass world coords transform to terrain shader
-	#tile_map.set_shader_tf(get_global_transform())
+	tile_map.material.set_shader_param('global_transform', get_global_transform())
 
 
 func gen_map():
